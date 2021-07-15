@@ -1,0 +1,8 @@
+name: iot
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python = 3.9.5
+  - pip
+  - django = 3.2
