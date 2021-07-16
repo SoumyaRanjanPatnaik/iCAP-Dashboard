@@ -1,35 +1,81 @@
-body{
-    background-color: white;
-    background-position: center;
-    background-size: cover;
-    box-sizing: border-box;
-    font-family: sans-serif;
-
-}
 .menubar{
     background-color: rgb(0,100,100);
     text-align: center;
+    display: flex;
+    justify-content: space-between;
 }
 .menubar ul{
-    display: inline-flex;
+    position: relative;
+    right: 4.7rem;
     list-style: none;
     color: #fff;
-
+    display: flex;
+    justify-content: center;
 }
 .menubar ul li{
-    width: 120px;
-    margin: 15px;
+    flex-basis: auto;
     padding: 15px;
-    border-radius: 50%;
-
+    /* border-radius: 7px; */
+    margin: 2px 0;
 } 
 .menubar ul li a{
     text-decoration: none;
     color: #fff;
-    
 }
 .active,.menubar ul li:hover {
   background-color: #2bab2b;
-  border-radius: 3px;
+  border-radius: 1px;
 
+}
+
+.menubar > span{
+    color: white;
+    align-self: center;
+    margin-left:  8px;
+}
+
+#sec1{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.2rem;
+    margin: 1.2rem; 
+}
+.worker{
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    border: 1px solid black;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.worker-top{
+    height: 100px;
+    background-color: rgba(0, 100, 100, 0.815);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.worker  h3{
+    color: white;
+    font-weight: 550;
+    font-size: 1.3rem;
+}
+
+.worker:hover{
+    box-shadow: -4px 4px 20px rgba(165, 165, 165, 0.712);
+    transition: 0.5s box-shadow ease-out ;
+}
+*, 
+*::after,
+*::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: white;
+    font-family: sans-serif;
 }
