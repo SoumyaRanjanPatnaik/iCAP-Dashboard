@@ -1,8 +1,11 @@
 .menubar{
-    background-color: rgb(0,100,100);
+    background-color: rgb(0, 100, 92);
     text-align: center;
     display: flex;
     justify-content: space-between;
+    position: sticky;
+    width: 100%;
+    top: 0;
 }
 .menubar ul{
     position: relative;
@@ -22,29 +25,30 @@
     text-decoration: none;
     color: #fff;
 }
-.active,.menubar ul li:hover {
-  background-color: #2bab2b;
-  border-radius: 1px;
 
-}
 
-.menubar > span{
+.menubar span{
     color: white;
     align-self: center;
     margin-left:  8px;
 }
 
+#sec1-wrapper{
+    overflow: auto;
+}
+
 #sec1{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
     gap: 1.2rem;
-    margin: 1.2rem; 
+    margin: 3rem 5vw; 
 }
+
 .worker{
     display: flex;
     flex-direction: column;
-    min-height: 400px;
     border: 1px solid black;
+    min-height: 350px;
     border-radius: 15px;
     overflow: hidden;
 }
@@ -63,9 +67,97 @@
     font-size: 1.3rem;
 }
 
-.worker:hover{
-    box-shadow: -4px 4px 20px rgba(165, 165, 165, 0.712);
-    transition: 0.5s box-shadow ease-out ;
+
+#app-title{
+    display: flex;
+    justify-content: flex-start;
+    user-select: none;
+}
+
+#expand-menu{
+    display: none;
+    border: 1px solid white;
+    margin-right: 7px !important;
+    padding: 6px 9px !important;
+    cursor: pointer;
+    user-select: none;
+}
+
+.active{
+  background-color: #2bab2b;
+  border-radius: 1px;
+}
+
+
+@media (max-width:750px) and (min-width:451px) {
+    .menubar span{
+        display: none;
+    }
+    #menubar-items{
+        inset:0;
+    }
+    .menubar{
+        justify-content: center;
+    }
+}
+@media (max-width:450px) {
+    .menubar{
+        flex-direction: column;
+        text-align: left;
+    }
+    .menubar ul{
+        flex-direction: column !important;
+        flex-basis: 0;
+        overflow: hidden;
+        transition: flex-basis 0.25s ease-in-out ;
+    }
+    .menubar .spacer{
+        display: none;
+    }
+    #menubar-items{
+        inset: 0;
+    }
+    .menubar span{
+        padding: 15px;
+    }
+    #app-title{
+        justify-content: space-between;
+        position: relative;
+        right: 9px;
+    }
+    #expand-menu{
+        display: inline;
+    }
+    .menubar ul{
+        background-color: rgb(4, 138, 120);
+    }
+    .menubar li{
+        margin:0 !important;
+    }
+}
+
+@media (hover: none){
+    #expand-menu:active{
+        background-color: #01552b;
+    }
+    .menubar ul li:hover {
+        outline: 2px solid white;
+        margin: 0 4px;
+    }
+}
+
+@media (hover: hover){
+    #expand-menu:hover, #expand-menu:active{
+        background-color: #01552b;
+    }
+    .worker:hover{
+        box-shadow: -4px 4px 20px rgba(165, 165, 165, 0.712);
+        transition: 0.5s box-shadow ease-out ;
+    }
+    .active,.menubar ul li:hover {
+        background-color: #2bab2b;
+        border-radius: 1px;
+    }
 }
 *, 
 *::after,
@@ -78,4 +170,10 @@
 body{
     background-color: white;
     font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100vh;
+    justify-content: stretch;
+    overflow: hidden;
 }
