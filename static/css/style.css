@@ -39,9 +39,10 @@
 
 #sec1{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
-    gap: 1.2rem;
-    margin: 3rem 5vw; 
+    grid-template-columns: repeat(auto-fill, minmax(300px,1fr ));
+    gap: 1.5rem;
+    max-width: 8000px;
+    margin: 3rem 7vw !important; 
 }
 
 .worker{
@@ -109,7 +110,7 @@
         flex-direction: column !important;
         flex-basis: 0;
         overflow: hidden;
-        transition: flex-basis 0.25s ease-in-out ;
+        transition: flex-basis 0.15s ease-in-out ;
     }
     .menubar .spacer{
         display: none;
