@@ -1,0 +1,14 @@
+{
+  "name": "health_and_safety",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dashboard.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "progressbar.js": "^1.1.0"
+  }
+}
