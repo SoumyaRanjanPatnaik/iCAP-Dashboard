@@ -120,10 +120,6 @@
     #expand-menu:hover, #expand-menu:active{
         background-color: #01552b;
     }
-    .worker:hover{
-        box-shadow: -4px 4px 20px rgba(165, 165, 165, 0.712);
-        transition: 0.5s box-shadow ease-out ;
-    }
     .active,.menubar ul li:hover {
         background-color: #2bab2b;
         border-radius: 1px;
