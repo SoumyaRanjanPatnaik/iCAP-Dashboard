@@ -2,11 +2,14 @@
 {% load static %}
 <html lang="en">
 <head>
-      <meta http-equiv="refresh" content="10">
+    <meta http-equiv="refresh" content="100">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health And Saftey</title>
+    <title>Health And Saftey - {{title}}</title>
+    {% block stylesheet%}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    {% endblock %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body >
@@ -16,13 +19,14 @@
            <span id="expand-menu">☰</span>
        </div>
         <ul id = "menubar-items">
-            <li class="active"><a href="#"> Dashboard </a></li>
-            <li><a href="#">Logs</a></li>
-            <li><a href="#">Attendence</a></li>
-            <li><a href="#">About</a></li>
+            <li class="{{dash_class}}"><a href="/"> Dashboard </a></li>
+            <li class = "{{logs_class}}"><a href="/logs">Logs</a></li>
+            <li class = "{{att_class}}"><a href="/attendance">Attendance</a></li>
+            <li class = "{{about_class}}"><a href="/about">About</a></li>
         </ul>
         <span class = "spacer"></span>
     </div>
+    {% block content %}
     <div id="sec1-wrapper">
         <section id = "sec1">
             <div id="worker1" class="worker">
@@ -54,6 +58,7 @@
             </div>
         </section>
     </div>
+    {% endblock %}
     
     <script src="{% static 'js/home.js' %}" ></script>
 
