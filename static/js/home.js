@@ -1,5 +1,5 @@
 let hamburger = document.getElementById("expand-menu");
-let toggle =1;
+let toggle =0;
 
 function toggle_menu(){
 	toggle++;

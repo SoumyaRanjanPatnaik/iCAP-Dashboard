@@ -14,7 +14,20 @@ WORKERS = {}
 API_KEYS = {"0":0,"5":5}
 LAST_UPDATE = {}
 def index(request):
-    return render(request, 'index.html')
+    context={"title":"Dashboard", "dash_class":"active", "logs_class":"", "att_class":"","about_class":""}
+    return render(request, 'index.html', context)
+
+def attendence(request):
+    context={"title":"Dashboard", "dash_class":"", "logs_class":"", "att_class":"active","about_class":""}
+    return render(request, 'attendance.html',context)
+
+def logs(request):
+    context={"title":"Dashboard", "dash_class":"", "logs_class":"active", "att_class":"","about_class":""}
+    return render(request, 'attendance.html',context)
+
+def about(request):
+    context={"title":"Dashboard", "dash_class":"", "logs_class":"", "att_class":"","about_class":"active"}
+    return render(request, 'about.html',context)
 
 @csrf_exempt
 def get(request):
