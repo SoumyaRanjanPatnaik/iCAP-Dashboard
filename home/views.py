@@ -11,7 +11,7 @@ from . import userfunc
 # Create your views here.
 WORKERS = {}
 # API_KEYS = {"dTb4j877t7rdgwkjM2D8wcgr6mdaSzuvt3h8j2fA8tLxg2h48q":0}
-API_KEYS = {"0":0,"5":5}
+API_KEYS = {"0":0,"1":1, "2":2, "3":3, "4":4,"5":5, "6":6, "7":7, "8":8}
 LAST_UPDATE = {}
 def index(request):
     context={"title":"Dashboard", "dash_class":"active", "logs_class":"", "att_class":"","about_class":""}
@@ -38,7 +38,7 @@ def get(request):
         if(request.GET.get("addr")):
             address_val = request.GET['addr']
             if(request.GET['addr']=='all'):
-                response_val, LAST_UPDATE = userfunc.update_dashboard(WORKERS, LAST_UPDATE)
+                response_val= userfunc.update_dashboard(WORKERS, LAST_UPDATE)
             elif request.GET['addr'] in WORKERS:
                 print(WORKERS)
                 response_val = WORKERS[str(address_val)]
