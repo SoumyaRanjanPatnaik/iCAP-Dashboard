@@ -15,5 +15,4 @@ class Worker(models.Model):
     time = datetime.datetime.now().time()
 
     def __str__(self):
-        return self.name 
-
+        return self.name
