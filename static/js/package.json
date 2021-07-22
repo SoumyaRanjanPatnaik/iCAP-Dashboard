@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "progressbar.js": "^1.1.0"
+    "progressbar.js": "^1.1.0",
+    "shifty": "^2.15.2"
   }
 }

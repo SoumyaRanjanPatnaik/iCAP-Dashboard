@@ -17,10 +17,14 @@ from: {color: '#5bc605'},
   // Set default step function for all animate calls
   step: (state, bar) => {
     bar.path.setAttribute('stroke', state.color);
-    var value = Math.round(bar.value() * 200);
-    if (value === 600) {
+    var value = Math.round(40+bar.value() * 120);
+    if (value === 400) {
       bar.setText('N/A');
-    } else {
+    }
+    else if(value>=160){
+      bar.setText('160+');
+    } 
+    else {
       bar.setText(value);
     }
 
@@ -30,7 +34,7 @@ from: {color: '#5bc605'},
 
 let bpm_curr = [];
 let bpm_avg = [];
-let worker_data = document.getElementsByClassName("worker-data");k 
+let worker_data = document.getElementsByClassName("worker-data"); 
 for(let i =0; i<number_of_workers; i++){
   let container_curr = '#bpm_curr'+String(i+1)
   let container_avg = '#bpm_avg'+String(i+1)
@@ -49,7 +53,10 @@ bpm_avg.forEach(bar=>{
 })
 
 function setAvgBpm(val, worker){
-  val = val/200;
+  if(val>=160){
+    val=160;
+  }
+  val = (val-40)/120;
   if(bpm_avg[worker].value()>1){
     bpm_avg[worker].set(1);
   }
@@ -57,9 +64,61 @@ function setAvgBpm(val, worker){
 }
 
 function setCurrBpm(val, worker){
-  val = val/200;
+  if(val>=160){
+    val=160;
+  }
+  val = (val-40)/120;
   if(bpm_curr[worker].value()>1){
     bpm_curr[worker].set(1);
   }
   bpm_curr[worker].animate(val);
 }
+
+function setWorkerData(h, stat, worker){
+  let status = document.getElementById('worker'+String(worker+1)).getElementsByClassName('status');
+  let height = document.getElementById('worker'+String(worker+1)).getElementsByClassName('height');
+  status[0].innerHTML=stat;
+  if(stat=='Online'){
+    try{
+      status[0].classList.remove('red-text');
+      status[0].classList.add('green-text');
+    }
+    catch{}
+  }
+  else{
+    try{
+      status[0].classList.remove('green-text');
+      status[0].classList.add('red-text');
+    }
+    catch{}
+  }
+  height[0].innerHTML=String(h)+"m";
+}
+
+const url = "http://192.168.0.9:8080/get?addr=all";
+setInterval(()=>{
+  fetch(url)
+    .then(res=>{
+      if (res.ok) {
+        res.json()
+          .then(data=>{json=data; return data})
+          .then(json=>{
+            for(var key in json){
+              if(key!='status'){
+                setAvgBpm(json[key].pulse.avg,parseInt(key));
+                setCurrBpm(json[key].pulse.curr,parseInt(key));
+                let stat = "Online";
+                if(json[key].fall_detected===true||json[key].pulse.curr>130||json[key].pulse.curr<60||json[key].pulse.avg>130||json[key].pulse.avg<60){
+                  stat = "Critical"
+                }
+                setWorkerData(json[key].height, stat, parseInt(key));
+                
+              }
+            }
+          });
+      } 
+      else {
+        alert("HTTP-Error: " + res.status);
+      }
+    })
+}, 750);
