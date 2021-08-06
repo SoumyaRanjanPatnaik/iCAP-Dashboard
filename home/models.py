@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 from django.utils import timezone
 # Create your models here.
@@ -20,3 +21,4 @@ class Log(models.Model):
     fall = models.BooleanField(default=False)
     date = models.DateField(default=timezone.localdate) 
     time = models.TimeField(default=timezone.localtime) 
+    datetime = models.DateTimeField(auto_now=True)
