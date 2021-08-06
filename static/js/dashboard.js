@@ -95,7 +95,7 @@ function setWorkerData(h, stat, worker){
   height[0].innerHTML=String(h)+"m";
 }
 
-const url = "http://192.168.0.9:8080/get?addr=all";
+const url = "http://192.168.0.100:8080/get?addr=all";
 setInterval(()=>{
   fetch(url)
     .then(res=>{
@@ -108,7 +108,10 @@ setInterval(()=>{
                 setAvgBpm(json[key].pulse.avg,parseInt(key));
                 setCurrBpm(json[key].pulse.curr,parseInt(key));
                 let stat = "Online";
-                if(json[key].fall_detected===true||json[key].pulse.curr>130||json[key].pulse.curr<60||json[key].pulse.avg>130||json[key].pulse.avg<60){
+                if ("status" in json.key){
+                  stat = json[key].status
+                }
+                else if(json[key].fall_detected===true||json[key].pulse.curr>130||json[key].pulse.curr<60||json[key].pulse.avg>130||json[key].pulse.avg<60){
                   stat = "Critical"
                 }
                 setWorkerData(json[key].height, stat, parseInt(key));
