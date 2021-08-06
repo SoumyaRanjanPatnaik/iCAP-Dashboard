@@ -1,3 +1,4 @@
+from home.models import Worker
 from json.encoder import JSONEncoder
 from os import stat
 from django.shortcuts import render
@@ -7,22 +8,24 @@ from django.views.decorators.csrf import csrf_exempt
 import time
 import json
 from . import userfunc 
+from home.models import Worker
 
 # Create your views here.
 WORKERS = {}
-# API_KEYS = {"dTb4j877t7rdgwkjM2D8wcgr6mdaSzuvt3h8j2fA8tLxg2h48q":0}
-API_KEYS = {"0":0,"1":1, "2":2, "3":3, "4":4,"5":5, "6":6, "7":7, "8":8}
 LAST_UPDATE = {}
 def index(request):
-    context={"title":"Dashboard", "dash_class":"active", "logs_class":"", "att_class":"","about_class":""}
+    workers = Worker.objects.all()
+    context={"title":"Dashboard", "dash_class":"active", "logs_class":"", "att_class":"","about_class":"", "worker_list":workers}
     return render(request, 'index.html', context)
 
 def attendence(request):
-    context={"title":"Dashboard", "dash_class":"", "logs_class":"", "att_class":"active","about_class":""}
+    workers = Worker.objects.all()
+    context={"title":"Dashboard", "dash_class":"active", "logs_class":"", "att_class":"","about_class":"", "worker_list":workers}
     return render(request, 'attendance.html',context)
 
 def logs(request):
-    context={"title":"Dashboard", "dash_class":"", "logs_class":"active", "att_class":"","about_class":""}
+    workers = Worker.objects.all()
+    context={"title":"Dashboard", "dash_class":"active", "logs_class":"", "att_class":"","about_class":"", "worker_list":workers}
     return render(request, 'attendance.html',context)
 
 def about(request):
@@ -56,11 +59,12 @@ def send(request):
         if("addr" in json_body) and ("data" in json_body):
             status = "[OK]"
             address_val = json_body["addr"]
-            if address_val not in API_KEYS:
-                json_body="Invalid API KEY"
+            if Worker.objects.filter(pk=address_val).exists():
+                WORKERS[address_val] = json_body["data"]
+                LAST_UPDATE[address_val] = int(time.time())
+                userfunc.update_model(json_body["data"], address_val)
             else:
-                WORKERS[API_KEYS[address_val]] = json_body["data"]
-                LAST_UPDATE[API_KEYS[address_val]] = int(time.time())
+                json_body="Invalid API KEY"
         else:
             json_body = "Invalid Request"
         print(json_body)
