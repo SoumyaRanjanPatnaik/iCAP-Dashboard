@@ -13,28 +13,24 @@ def update_dashboard(workers, last_update):
 	for row in worker:
 		curr_id=row.worker_id
 		response_val[str(curr_id)]={}
-		# try:
-		# 	latest_log = Log.objects.filter(worker_id=curr_id)[0]
-		# 	response_val[str(curr_id)]["fall_detected"]=latest_log.fall
-		# 	response_val[str(curr_id)]["pulse"]={}
-		# 	response_val[str(curr_id)]["pulse"]["avg"]=latest_log.avg_bpm
-		# 	response_val[str(curr_id)]["pulse"]["curr"]=latest_log.curr_bpm
-		# 	response_val[str(curr_id)]["height"]=latest_log.height
-		# 	print(latest_log.datetime-datetime.now())
-		# 	if (latest_log.datetime-datetime.now())>timedelta(minutes=5):
-		# 		response_val[str(curr_id)]["Status"]="Offline"
-		# except Exception:
-		# 	response_val[str(curr_id)]={"ERROR":"No logs found"}
-		latest_log = Log.objects.filter(worker_id=curr_id)[0]
-		response_val[str(curr_id)]["fall_detected"]=latest_log.fall
-		response_val[str(curr_id)]["pulse"]={}
-		response_val[str(curr_id)]["pulse"]["avg"]=latest_log.avg_bpm
-		response_val[str(curr_id)]["pulse"]["curr"]=latest_log.curr_bpm
-		response_val[str(curr_id)]["height"]=latest_log.height
-		if (timezone.localtime()-latest_log.datetime).total_seconds()/60>5:
-			response_val[str(curr_id)]["status"]="Offline"
-		else:
-			response_val[str(curr_id)]["status"]="Online"
+		try:
+			latest_log = Log.objects.filter(worker_id=curr_id).order_by("-datetime")[0]
+			if (timezone.localdate()!=latest_log.date):
+				response_val.pop(str(curr_id))
+				continue
+
+			if (timezone.now()-latest_log.datetime)>timedelta(minutes=5):
+				response_val[str(curr_id)]["status"]="Offline"
+			else:
+				response_val[str(curr_id)]["status"]="Online"
+			response_val[str(curr_id)]["fall_detected"]=latest_log.fall
+			response_val[str(curr_id)]["pulse"]={}
+			response_val[str(curr_id)]["pulse"]["avg"]=latest_log.avg_bpm
+			response_val[str(curr_id)]["pulse"]["curr"]=latest_log.curr_bpm
+			response_val[str(curr_id)]["height"]=latest_log.height
+		except Exception:
+			print("Exception")
+			response_val[str(curr_id)]={"ERROR":"No logs found"}
 	return response_val
 
 def update_model(data=None, addr = None):
@@ -46,4 +42,27 @@ def update_model(data=None, addr = None):
 	newLog.height = data["height"]
 	newLog.fall = data["fall_detected"]
 	newLog.save()
+	new_attendance = Attendance()
+	new_attendance.worker_id=Worker.objects.get(pk=addr)
+	new_attendance.Present=True
+	new_attendance.save()
+	
 
+
+def attendance():
+	for row in Worker:
+		curr_id = row.worker_id		
+		last_attendance = Attendance.objects.filter(worker_id = curr_id).order_by("datetime")[0]	
+		if(last_attendance.date!=timezone.now()):
+			temp_date = last_attendance.date+timedelta(1)
+			curr_date = timezone.localdate()
+			while(True):
+				new_attendance = Attendance()
+				new_attendance.worker_id=Worker.objects.filter(pk=curr_id)
+				new_attendance.Present=False
+				new_attendance.date = temp_date
+				new_attendance.save()
+				temp_date+=timedelta(days=1)
+				if(temp_date==curr_date):
+					break
+			pass

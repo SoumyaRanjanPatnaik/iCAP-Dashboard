@@ -13,7 +13,7 @@ class Worker(models.Model):
         return self.name
 
 class Log(models.Model):
-    worker_id = models.ForeignKey(Worker, on_delete=models.CASCADE, blank=False, null=False)
+    worker_id = models.ForeignKey(Worker, on_delete=models.CASCADE, blank=-1, null=False)
     height = models.FloatField(max_length=50)
     avg_bpm = models.FloatField(max_length=50)
     curr_bpm = models.FloatField(max_length=50)
@@ -21,4 +21,9 @@ class Log(models.Model):
     fall = models.BooleanField(default=False)
     date = models.DateField(default=timezone.localdate) 
     time = models.TimeField(default=timezone.localtime) 
-    datetime = models.DateTimeField(auto_now=True)
+    datetime = models.DateTimeField(default=timezone.now)
+
+class Attendance(models.Model):
+    worker_id = models.ForeignKey(Worker, on_delete=models.CASCADE, blank=-1, null=False)
+    date = models.DateField(auto_now=True)
+    Present = models.BooleanField(default=False)

@@ -102,17 +102,17 @@ setInterval(()=>{
     .then(res=>{
       if (res.ok) {
         res.json()
-          .then(data=>{json=data; return data})
+          // .then(data=>{json=data; return data})
           .then(json=>{
             for(var key in json){
               if(key!='status'){
                 setAvgBpm(json[key].pulse.avg,parseInt(key));
                 setCurrBpm(json[key].pulse.curr,parseInt(key));
                 let stat = "Online";
-                if ("status" in json.key){
+                try {
                   stat = json[key].status
-                }
-                else if(json[key].fall_detected===true||json[key].pulse.curr>130||json[key].pulse.curr<60||json[key].pulse.avg>130||json[key].pulse.avg<60){
+                } catch (error) {}
+                if(json[key].fall_detected===true||json[key].pulse.curr>130||json[key].pulse.curr<60||json[key].pulse.avg>130||json[key].pulse.avg<60){
                   stat = "Critical"
                 }
                 setWorkerData(json[key].height, stat, parseInt(key));
