@@ -52,7 +52,7 @@ def update_model(data=None, addr = None):
 def attendance():
 	for row in Worker:
 		curr_id = row.worker_id		
-		last_attendance = Attendance.objects.filter(worker_id = curr_id)[0]	
+		last_attendance = Attendance.objects.filter(worker_id = curr_id).order_by("datetime")[0]	
 		if(last_attendance.date!=timezone.now()):
 			temp_date = last_attendance.date+timedelta(1)
 			curr_date = timezone.localdate()
