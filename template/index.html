@@ -11,7 +11,7 @@
     {% endblock %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body >
+<body onload = "">
    <div class="menubar">
        <div id="app-title">
            <span>Health and Safety</span>
@@ -28,111 +28,29 @@
     {% block content %}
     <div id="sec1-wrapper">
         <section id = "sec1">
-            <div id="worker1" class="worker">
-                <div class="worker-top"><h3>Worker - 1</h3></div>
-                <div class="worker-data">
-                    <div class="bpm">
-                        <div id = "bpm_curr1" class="bpm_curr"></div>
-                        <div id = "bpm_avg1" class="bpm_avg"></div>
-                    </div>
-                    <div class="height">N/A</div>
-                    <div class="status red-text">Offline </div>
-                </div>
-            </div>
-            <div id="worker2" class="worker">
-                <div class="worker-top"><h3>Worker - 2</h3></div>
-                <div class="worker-data">
-                    <div class="bpm">
-                        <div id = "bpm_curr2"class="bpm_curr"></div>
-                        <div id = "bpm_avg2" class="bpm_avg"></div>
-                    </div>
+            {% for worker in worker_list %}
+                <div id="worker{{forloop.counter}}" class="worker">
+                    <div class="worker-top"><h3>{{ worker.name }}</h3></div>
+                    <div class="worker-data">
+                        <div class="bpm">
+                            <div id = "bpm_curr{{forloop.counter}}" class="bpm_curr"></div>
+                            <div id = "bpm_avg{{forloop.counter}}" class="bpm_avg"></div>
+                        </div>
                         <div class="height">N/A</div>
-                    <div class="status red-text">Offline</div>
-                </div>
-            </div>
-            <div id="worker3" class="worker">
-                <div class="worker-top"><h3>Worker - 3</h3></div>
-                <div class="worker-data">
-                    <div class="bpm">
-                        <div id = "bpm_curr3"class="bpm_curr"></div>
-                        <div id = "bpm_avg3" class="bpm_avg"></div>
+                        <div class="status red-text">Offline </div>
                     </div>
-                    <div class="height">N/A</div>
-                    <div class="status red-text">Offline</div>
                 </div>
-            </div>
-            <div id="worker4" class="worker">
-                <div class="worker-top"><h3>Worker - 4</h3></div>
-                <div class="worker-data">
-                    <div class="bpm">
-                        <div id = "bpm_curr4"class="bpm_curr"></div>
-                        <div id = "bpm_avg4" class="bpm_avg"></div>
-                    </div>
-                    <div class="height">N/A</div>
-                    <div class="status red-text">Offline</div>
-                </div>
-            </div>
-            <div id="worker5" class="worker">
-                <div class="worker-top"><h3>Worker - 5</h3></div>
-                <div class="worker-data">
-                    <div class="bpm">
-                        <div id = "bpm_curr5"class="bpm_curr"></div>
-                        <div id = "bpm_avg5" class="bpm_avg"></div>
-                    </div>
-                    <div class="height">N/A</div>
-                    <div class="status red-text">Offline</div>
-                </div>
-            </div>
-            <div id="worker6" class="worker">
-                <div class="worker-top"><h3>Worker - 6</h3></div>
-                <div class="worker-data">
-                    <div class="bpm">
-                        <div id = "bpm_curr6"class="bpm_curr"></div>
-                        <div id = "bpm_avg6" class="bpm_avg"></div>
-                    </div>
-                    <div class="height">N/A</div>
-                    <div class="status red-text">Offline</div>
-                </div>
-            </div>
-            <div id="worker7" class="worker">
-                <div class="worker-top"><h3>Worker - 7</h3></div>
-                <div class="worker-data">
-                    <div class="bpm">
-                        <div id = "bpm_curr7"class="bpm_curr"></div>
-                        <div id = "bpm_avg7" class="bpm_avg"></div>
-                    </div>
-                    <div class="height">N/A</div>
-                    <div class="status red-text">Offline</div>
-                </div>
-            </div>
-            <div id="worker8" class="worker">
-                <div class="worker-top"><h3>Worker - 8</h3></div>
-                <div class="worker-data">
-                    <div class="bpm">
-                        <div id = "bpm_curr8"class="bpm_curr"></div>
-                        <div id = "bpm_avg8" class="bpm_avg"></div>
-                    </div>
-                    <div class="height">N/A</div>
-                    <div class="status red-text">Offline</div>
-                </div>
-            </div>
-            <div id="worker9" class="worker">
-                <div class="worker-top"><h3>Worker - 9</h3></div>
-                <div class="worker-data">
-                    <div class="bpm">
-                        <div id = "bpm_curr9"class="bpm_curr"></div>
-                        <div id = "bpm_avg9" class="bpm_avg"></div>
-                    </div>
-                    <div class="height">N/A</div>
-                    <div class="status red-text">Offline</div>
-                </div>
-            </div>
-        </section>
+            {% endfor %}
+        </section> 
     </div>
     {% endblock %}
     
     <script src="{% static 'js/home.js' %}" ></script>
+    {% block scripts %}
+        <script>
+            number_of_workers  = {{worker_list.count}}
+        </script>
     <script src="{% static 'js/dash.js' %}" ></script>
-
+    {% endblock %}
 </body>
 </html>

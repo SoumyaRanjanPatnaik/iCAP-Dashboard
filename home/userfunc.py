@@ -2,6 +2,7 @@ from datetime import timedelta
 import time
 
 from django.db.models.query import QuerySet
+from django.utils.timezone import localdate
 from home.models import *
 
 from django.http import response
@@ -42,10 +43,12 @@ def update_model(data=None, addr = None):
 	newLog.height = data["height"]
 	newLog.fall = data["fall_detected"]
 	newLog.save()
-	new_attendance = Attendance()
-	new_attendance.worker_id=Worker.objects.get(pk=addr)
-	new_attendance.Present=True
-	new_attendance.save()
+	last_attendance = Attendance.objects.filter(worker_id = curr_id).order_by("datetime")[0]	
+	if(last_attendance.date!=timezone.localdate()):
+		new_attendance = Attendance()
+		new_attendance.worker_id=Worker.objects.get(pk=addr)
+		new_attendance.Present=True
+		new_attendance.save()
 	
 
 

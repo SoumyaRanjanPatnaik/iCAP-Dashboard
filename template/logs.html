@@ -1,3 +1,57 @@
 {% extends 'index.html' %}
+{% load static %}
+{% block stylesheet %}
+	<link rel="stylesheet" href="{% static 'css/logs.css' %}"">
+{% endblock stylesheet %}
 {% block content %}
+	<div class="logs">
+		{% for worker in worker_list %}
+			{% with worker.log_set.all as logs %}
+			<div class="logs__worker">
+				<div class="logs__worker__name">
+					<span class="logs__worker__name__button">
+						{{forloop.counter}}. {{worker.name}}
+					</span>
+					<span class="logs__worker__name__icon">+</span>
+				</div>
+			{% if logs %}
+				<div class="table-container no_height">
+					<table class="logs__worker__table">
+						<tr class="logs__worker__table__row header">
+							<td>S. No.</td>
+							<td>Avg Pulse Rate</td>
+							<td>Inst. Pulse Rate</td>
+							<td>Height of Platform</td>
+							<td>Status</td>
+							<td>Fall Detected</td>
+							<td>Date</td>
+							<td>Time</td>
+						</tr>
+							{% for log in logs %}
+								<tr class="logs__worker__table__row ">
+									<td>{{forloop.counter}}</td>
+									<td>{{log.avg_bpm}}</td>
+									<td>{{log.curr_bpm}}</td>
+									<td>{{log.height}}</td>
+									<td></td>
+									<td>{{log.fall}}</td>
+									<td>{{log.date}}</td>
+									<td>{{log.time}}</td>
+								</tr>
+							{% endfor %}
+					</table>
+				</div>
+			</div>
+			{% else %}
+				<div class="table-container no_height">
+					<p style="text-align:center; padding: 9px;">No Logs Found</p>	
+				</div>
+			{% endif %}
+			{% endwith %}
+	{% endfor %}
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{% static 'js/logs.js' %}"></script>
 {% endblock %}

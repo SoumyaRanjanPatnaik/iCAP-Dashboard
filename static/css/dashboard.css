@@ -111,8 +111,15 @@
 .red-text{
     color: red;
 }
+
+.dull::before{
+    content: "";
+    background: black;
+    z-index: 1;
+    opacity: 0.5;
+}
 :root{
-    --worker-data-margin-left: 115px
+    --worker-data-margin-left: 115px;
 }
 @media (max-width:450px) {
     #sec1{

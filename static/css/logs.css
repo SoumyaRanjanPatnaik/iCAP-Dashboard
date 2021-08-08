@@ -1,0 +1,47 @@
+.logs{
+	padding: 2.5%;
+	height: 100vh;
+}
+
+.logs__worker{
+	margin: 12px 0;
+}
+
+.logs__worker__name{
+	font-size: 1.15rem;
+	/* border: 1px solid black; */
+	padding: 8px 12px;
+	background: rgb(95, 99, 99); 
+	color: white;
+	display: flex;
+	justify-content: space-between;
+}
+
+.logs__worker__table{
+	width: 100%;
+}
+.table-container{
+	max-height: 250px;
+	transition: max-height 600ms 0s cubic-bezier(0, 0.54, 0.44, 1.2);
+	overflow: hidden;
+}
+.no_height{
+	max-height: 0 !important;
+	overflow: hidden;
+}
+
+.logs__worker__table *{
+	text-align: center;
+}
+.logs__worker__table tr:nth-child(2n + 1){
+	background-color: rgb(170, 228, 255);
+}
+.logs__worker__table__row td{
+	font-size: 0.95rem;
+	padding: 5px 0;
+	width: 1fr;
+}
+.header td{
+	font-weight: 550;
+	padding: 9px 0;
+}
