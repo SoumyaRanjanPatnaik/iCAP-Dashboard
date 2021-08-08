@@ -30,7 +30,10 @@
         <section id = "sec1">
             {% for worker in worker_list %}
                 <div id="worker{{forloop.counter}}" class="worker">
-                    <div class="worker-top"><h3>{{ worker.name }}</h3></div>
+                    <div class="worker-top">
+                        <h3>{{ worker.name }}</h3>
+                        <span class="location">{{ worker.location_of_work }}</span>
+                    </div>
                     <div class="worker-data">
                         <div class="bpm">
                             <div id = "bpm_curr{{forloop.counter}}" class="bpm_curr"></div>
