@@ -83,6 +83,8 @@ function setWorkerData(h, stat, worker){
   let worker_element = document.getElementById('worker'+String(worker+1))
   status[0].innerHTML=stat;
   if(stat==='Offline'){
+      status[0].classList.remove('green-text');
+      status[0].classList.add('red-text');
       worker_element.classList.add('dull')      
   }
   else if(stat=='Online'){
@@ -97,6 +99,7 @@ function setWorkerData(h, stat, worker){
     try{
       status[0].classList.remove('green-text');
       status[0].classList.add('red-text');
+      worker_element.classList.remove('dull')      
 
     } catch{}
 

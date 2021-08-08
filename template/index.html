@@ -18,10 +18,10 @@
            <span id="expand-menu">☰</span>
        </div>
         <ul id = "menubar-items">
-            <li class="{{dash_class}}"><a href="/"> Dashboard </a></li>
-            <li class = "{{logs_class}}"><a href="/logs">Logs</a></li>
-            <li class = "{{att_class}}"><a href="/attendance">Attendance</a></li>
-            <li class = "{{about_class}}"><a href="/about1">About</a></li>
+            <li class="{{dash_class}}"><a href="/" data-link> Dashboard </a></li>
+            <li class = "{{logs_class}}"><a href="/logs" data-link>Logs</a></li>
+            <li class = "{{att_class}}"><a href="/attendance" data-link>Attendance</a></li>
+            <li class = "{{about_class}}"><a href="/about1" data-link>About</a></li>
         </ul>
         <span class = "spacer"></span>
     </div>
@@ -44,6 +44,7 @@
         </section> 
     </div>
     {% endblock %}
+    <div class="vertical_spacer"></div>
     
     <script src="{% static 'js/home.js' %}" ></script>
     {% block scripts %}

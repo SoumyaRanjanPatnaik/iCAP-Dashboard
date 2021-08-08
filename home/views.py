@@ -20,16 +20,16 @@ def index(request):
 
 def attendence(request):
     workers = Worker.objects.all()
-    context={"title":"Dashboard", "dash_class":"", "logs_class":"", "att_class":"active","about_class":"", "worker_list":workers}
+    context={"title":"Attendance", "dash_class":"", "logs_class":"", "att_class":"active","about_class":"", "worker_list":workers}
     return render(request, 'attendance.html',context)
 
 def logs(request):
     workers = Worker.objects.all()
-    context={"title":"Dashboard", "dash_class":"", "logs_class":"active", "att_class":"","about_class":"", "worker_list":workers}
+    context={"title":"Logs", "dash_class":"", "logs_class":"active", "att_class":"","about_class":"", "worker_list":workers}
     return render(request, 'logs.html',context)
 
 def about(request):
-    context={"title":"Dashboard", "dash_class":"", "logs_class":"", "att_class":"","about_class":"active"}
+    context={"title":"About", "dash_class":"", "logs_class":"", "att_class":"","about_class":"active"}
     return render(request, 'about.html',context)
 
 @csrf_exempt

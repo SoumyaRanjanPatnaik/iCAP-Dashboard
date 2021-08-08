@@ -30,7 +30,6 @@ def update_dashboard(workers, last_update):
 			response_val[str(curr_id)]["pulse"]["curr"]=latest_log.curr_bpm
 			response_val[str(curr_id)]["height"]=latest_log.height
 		except Exception:
-			print("Exception")
 			response_val[str(curr_id)]={"ERROR":"No logs found"}
 	return response_val
 

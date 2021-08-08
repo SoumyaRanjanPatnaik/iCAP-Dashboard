@@ -58,6 +58,10 @@
   border-radius: 1px;
 }
 
+.vertical_spacer{
+    height: 50px;
+}
+
 
 @media (max-width:750px) and (min-width:451px) {
     .menubar span{

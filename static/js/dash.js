@@ -81,19 +81,29 @@ function setCurrBpm(val, worker){
 function setWorkerData(h, stat, worker){
   let status = document.getElementById('worker'+String(worker+1)).getElementsByClassName('status');
   let height = document.getElementById('worker'+String(worker+1)).getElementsByClassName('height');
+  let worker_element = document.getElementById('worker'+String(worker+1))
   status[0].innerHTML=stat;
-  if(stat=='Online'){
+  if(stat==='Offline'){
+      status[0].classList.remove('green-text');
+      status[0].classList.add('red-text');
+      worker_element.classList.add('dull')      
+  }
+  else if(stat=='Online'){
     try{
       status[0].classList.remove('red-text');
       status[0].classList.add('green-text');
+      worker_element.classList.remove('dull')      
     }
     catch{}
   }
-  else if(stat=="Offline"||stat=="Critical"){
+  else if(stat=="Critical"){
     try{
       status[0].classList.remove('green-text');
       status[0].classList.add('red-text');
+      worker_element.classList.remove('dull')      
+
     } catch{}
+
   }
   else if (stat=="Warning"){
     try{
@@ -135,7 +145,7 @@ setInterval(()=>{
         alert("HTTP-Error: " + res.status);
       }
     })
-}, 1100);
+}, 1000);
 },{"progressbar.js":4}],2:[function(require,module,exports){
 // Circle shaped progress bar
 
