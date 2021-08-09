@@ -5,7 +5,7 @@ from django.utils import timezone
 
 
 class Worker(models.Model):
-    worker_id = models.AutoField(primary_key=True)
+    worker_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
     location_of_work = models.CharField(max_length=50)
     status = models.CharField(max_length=15, default="Offline")
