@@ -32,17 +32,11 @@ def about(request):
 
 @csrf_exempt
 def get(request):
-    global WORKERS
-    global LAST_UPDATE
     response_val = {}
     if(request.method == "GET"):
         if(request.GET.get("addr")):
-            address_val = request.GET['addr']
             if(request.GET['addr']=='all'):
-                response_val= userfunc.update_dashboard(WORKERS, LAST_UPDATE)
-            elif request.GET['addr'] in WORKERS:
-                print(WORKERS)
-                response_val = WORKERS[str(address_val)]
+                response_val= userfunc.update_dashboard()
     return JsonResponse(response_val)
     
 
