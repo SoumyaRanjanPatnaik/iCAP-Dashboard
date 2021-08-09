@@ -43,6 +43,8 @@
                         <div class="status red-text">Offline </div>
                     </div>
                 </div>
+            {% empty %}
+            <p style="position:absolute; top:50%; left: calc(50% - 12.3rem)">No workers found. Please Contact your Administrator</p>
             {% endfor %}
         </section> 
     </div>
