@@ -35,7 +35,7 @@
                 font-size 200ms linear;
 }
 
-.worker:hover .worker-top{
+.worker:hover .worker-top, .worker:focus .worker-top{
     flex-basis: 97px;
     font-size: 1.15rem;
 }
@@ -132,14 +132,25 @@
 .dull{
     position: relative;
 }
-.dull::before{
+
+.dull::before {
     content: "";
-    background: black;
+    background: #000;
     z-index: 100;
-    opacity: 0.5;
+    opacity: 0.4;
     position: absolute;
     height: 100%;
     width: 100%;
+}
+.dull::after {
+    content: "OFFLINE";
+    color: white;
+    z-index: 110;
+    position: absolute;
+    top: 60%;
+    font-weight: bold;
+    font-size: 1.5em;
+    left: 36.2%;
 }
 :root{
     --worker-data-margin-left: 115px;
@@ -174,9 +185,7 @@
     }
 }
 
-@media (hover: hover){
-    .worker:hover{
-        box-shadow: -2px 2px 7px 5px rgba(228, 228, 228, 0.712);
-        transition: 0.1s box-shadow linear ;
-    }
+.worker:hover .worker:focus{
+    box-shadow: -2px 2px 7px 5px rgba(228, 228, 228, 0.712);
+    transition: 0.1s box-shadow linear ;
 }

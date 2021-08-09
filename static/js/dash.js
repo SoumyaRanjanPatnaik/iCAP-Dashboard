@@ -1,9 +1,5 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 let ProgressBar = require('progressbar.js')
-// let number_of_workers = 0;
-// function set_workers(n){
-//   number_of_workers = n;
-// }
 const bar_parameters = {
   strokeWidth: 6,
   color: '#FFEA82',
@@ -36,25 +32,22 @@ from: {color: '#5bc605'},
   }
 }
 
-let bpm_curr = [];
-let bpm_avg = [];
-let worker_data = document.getElementsByClassName("worker-data"); 
-for(let i =0; i<number_of_workers; i++){
-  let container_curr = '#bpm_curr'+String(i+1)
-  let container_avg = '#bpm_avg'+String(i+1)
-  bpm_curr.push(new ProgressBar.SemiCircle(container_curr, bar_parameters));
-  bpm_avg.push(new ProgressBar.SemiCircle(container_avg, bar_parameters));
+for(key in bpm_curr){
+    let container_curr = '#bpm_curr'+String(key)
+    let container_avg = '#bpm_avg'+String(key)
+    bpm_curr[key] = new ProgressBar.SemiCircle(container_curr, bar_parameters);
+    bpm_avg[key] = new ProgressBar.SemiCircle(container_avg, bar_parameters);
 }
-bpm_curr.forEach(bar=>{
-  bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-  bar.text.style.fontSize = '1rem';
-  bar.set(3);  // Number from 0.0 to 1.0
-})
-bpm_avg.forEach(bar=>{
-  bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-  bar.text.style.fontSize = '1rem';
-  bar.set(3);  // Number from 0.0 to 1.0
-})
+for(bar in bpm_curr){
+    bpm_curr[bar].text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+    bpm_curr[bar].text.style.fontSize = '1rem';
+    bpm_curr[bar].set(3);  // Number from 0.0 to 1.0
+}
+for(bar in bpm_avg){
+    bpm_avg[bar].text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+    bpm_avg[bar].text.style.fontSize = '1rem';
+    bpm_avg[bar].set(3);  // Number from 0.0 to 1.0
+}
 
 function setAvgBpm(val, worker){
   if(val>=160){
@@ -79,9 +72,9 @@ function setCurrBpm(val, worker){
 }
 
 function setWorkerData(h, stat, worker){
-  let status = document.getElementById('worker'+String(worker+1)).getElementsByClassName('status');
-  let height = document.getElementById('worker'+String(worker+1)).getElementsByClassName('height');
-  let worker_element = document.getElementById('worker'+String(worker+1))
+  let status = document.getElementById('worker'+String(worker)).getElementsByClassName('status');
+  let height = document.getElementById('worker'+String(worker)).getElementsByClassName('height');
+  let worker_element = document.getElementById('worker'+String(worker))
   status[0].innerHTML=stat;
   if(stat==='Offline'){
       status[0].classList.remove('green-text');
