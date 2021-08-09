@@ -4,10 +4,10 @@ from .models import *
 
 
 class WorkerAdmin(admin.ModelAdmin):
-    list_display = ('worker_id','name', 'location_of_work', )
+    list_display = ('worker_id','name', 'location_of_work', 'status')
 
 class LogsAdmin(admin.ModelAdmin):
-    list_display = ('worker_id', 'height', 'avg_bpm', 'curr_bpm', 'fall', 'date', 'time')
+    list_display = ('worker_id', 'height', 'avg_bpm', 'curr_bpm', 'fall', 'status', 'date', 'time')
 
 class AttendanceAdmin(admin.ModelAdmin):
     list_display = ('worker_id', 'date', 'Present')
