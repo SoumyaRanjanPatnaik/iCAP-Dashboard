@@ -11,8 +11,6 @@ from . import userfunc
 from home.models import Worker
 
 # Create your views here.
-WORKERS = {}
-LAST_UPDATE = {}
 def index(request):
     workers = Worker.objects.all()
     context={"title":"Dashboard", "dash_class":"active", "logs_class":"", "att_class":"","about_class":"", "worker_list":workers}
@@ -60,8 +58,6 @@ def send(request):
             status = "[OK]"
             address_val = json_body["addr"]
             if Worker.objects.filter(pk=address_val).exists():
-                WORKERS[address_val] = json_body["data"]
-                LAST_UPDATE[address_val] = int(time.time())
                 userfunc.update_model(json_body["data"], address_val)
             else:
                 json_body="Invalid API KEY"
