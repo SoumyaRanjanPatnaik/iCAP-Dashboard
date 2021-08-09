@@ -7,7 +7,7 @@ from home.models import *
 
 from django.http import response
 
-def update_dashboard(workers, last_update):
+def update_dashboard(addr = None):
 	response_val = {}
 	worker = Worker.objects.all()
 	
@@ -15,15 +15,21 @@ def update_dashboard(workers, last_update):
 		curr_id=row.worker_id
 		response_val[str(curr_id)]={}
 		try:
-			latest_log = Log.objects.filter(worker_id=curr_id).order_by("-datetime")[0]
+			latest_log = Log.objects.filter(worker_id=curr_id).order_by("-datetime").first()
 			if (timezone.localdate()!=latest_log.date):
 				response_val.pop(str(curr_id))
 				continue
-
+			
 			if (timezone.now()-latest_log.datetime)>timedelta(minutes=5):
-				response_val[str(curr_id)]["status"]="Offline"
+				row.status = "Offline"
+				latest_log.pk = None
+				latest_log.status=row.status
+				latest_log.save()
 			else:
-				response_val[str(curr_id)]["status"]="Online"
+				row.status = "Online"
+			row.save()
+
+			response_val[str(curr_id)]["status"]=row.status
 			response_val[str(curr_id)]["fall_detected"]=latest_log.fall
 			response_val[str(curr_id)]["pulse"]={}
 			response_val[str(curr_id)]["pulse"]["avg"]=latest_log.avg_bpm
@@ -41,30 +47,37 @@ def update_model(data=None, addr = None):
 	newLog.avg_bpm = data["pulse"]["avg"]
 	newLog.height = data["height"]
 	newLog.fall = data["fall_detected"]
+	newLog.status = "Online"
 	newLog.save()
-	last_attendance = Attendance.objects.filter(worker_id = curr_id).order_by("datetime")[0]	
-	if(last_attendance.date!=timezone.localdate()):
+
+	last_attendance = Attendance.objects.filter(worker_id =addr).order_by("-date").first()	
+	if(last_attendance.date < timezone.localdate()):
+		attendance
+	if(last_attendance.date!=timezone.localdate() or last_attendance.Present==False):
 		new_attendance = Attendance()
 		new_attendance.worker_id=Worker.objects.get(pk=addr)
 		new_attendance.Present=True
 		new_attendance.save()
-	
 
 
 def attendance():
-	for row in Worker:
-		curr_id = row.worker_id		
-		last_attendance = Attendance.objects.filter(worker_id = curr_id).order_by("datetime")[0]	
-		if(last_attendance.date!=timezone.now()):
-			temp_date = last_attendance.date+timedelta(1)
+	worker = Worker.objects.all()
+	for row in worker:
+		curr_id = row.worker_id
+		last_attendance = Attendance.objects.filter(worker_id = curr_id).order_by("-date").first()
+		if(last_attendance is None):
+			new_attendance = Attendance()
+			new_attendance.worker_id=Worker.objects.get(pk=curr_id)
+			new_attendance.Present=False
+			new_attendance.save()
+		elif(last_attendance.date!=timezone.now()):
 			curr_date = timezone.localdate()
-			while(True):
+			temp_date = last_attendance.date+timedelta(days=1)
+			while(temp_date<curr_date):
 				new_attendance = Attendance()
-				new_attendance.worker_id=Worker.objects.filter(pk=curr_id)
+				new_attendance.worker_id=Worker.objects.get(pk=curr_id)
 				new_attendance.Present=False
 				new_attendance.date = temp_date
 				new_attendance.save()
 				temp_date+=timedelta(days=1)
-				if(temp_date==curr_date):
-					break
 			pass
