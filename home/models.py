@@ -8,6 +8,7 @@ class Worker(models.Model):
     worker_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
     location_of_work = models.CharField(max_length=50)
+    status = models.CharField(max_length=15, default="Offline")
 
     def __str__(self):
         return self.name
