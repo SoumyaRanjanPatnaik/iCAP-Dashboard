@@ -7,20 +7,22 @@ This code present in this repository acts as the **frontend** and **webserver** 
 ## Sensor Nodes
 The workers will be required to wear sensor nodes that exist in the form of helmets, which will be used to monitor the vitals of the workers (Temparature and Pulse) and to detetect falls. Since the **accelerometer** is responsible for detecting falls, the chances of false positives is high. This is because the acceleration a fall is \(g=9.8m/s^2\) regardless of the height of the platform the worker was standing on. We hence use a barometer to calculate the height of the platform above round level, after which we calculate the expected duration of fall using kinematics.
 
-Let the height of the platform be \(H\), acceleration due to gravity be \(g=9.8m/s^2\) and the expected duration of fall be \(t\). We can assume the initial velocity to be \(u=0\). 
+Let the height of the platform be \(H\), acceleration due to gravity be ![formula](https://render.githubusercontent.com/render/math?math=g=9.8m/s^2) and the expected duration of fall be \(t\). We can assume the initial velocity to be \(u=0\). 
 
 For equations of motion, we get
-\[
-	H = ut + \frac{1}{2}gt^2
-\]
+
+
+![formula](https://render.githubusercontent.com/render/math?math=H=ut%2B\frac{1}{2}gt^2)
+
 Since \(u=0\), we can rewrite the above expression as
-\[
-	t = \sqrt{\frac{2H}{g}}	
-\]
 
-We can hence conclude that a fall has occurred if the duration of fall detected using the accelerometer (say \(t_{obs}\)) is greater than the expression of expected duration of fall (say \(t_{exp}\)) obtained above after correcting for margin of error (say \(E\)), i.e.,
-\[t_{obs}>t_{expected} \pm E\]
 
+![formula](https://render.githubusercontent.com/render/math?math=H=\frac{1}{2}gt^2)
+
+We can hence conclude that a fall has occurred if the duration of fall detected using the accelerometer (say ![formula](https://render.githubusercontent.com/render/math?math=t_{obs})) is greater than the expression of expected duration of fall (say ![formula](https://render.githubusercontent.com/render/math?math=t_{exp})) obtained above after correcting for margin of error (say E), i.e.,
+
+
+![formula](https://render.githubusercontent.com/render/math?math=t_{obs}=t_{exp}\pm+E)
 
 All the data is sent to both **ThingSpeak** and a local **Django WebServer**. 
 
