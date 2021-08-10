@@ -83,7 +83,7 @@
         flex-direction: column !important;
         flex-basis: 0;
         overflow: hidden;
-        transition: flex-basis 0.15s ease-in-out ;
+        transition: flex-basis 0.25s 0s cubic-bezier(0.875, 0.045, 0.2, 1);
     }
     .menubar .spacer{
         display: none;
