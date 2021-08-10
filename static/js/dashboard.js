@@ -1,8 +1,4 @@
 let ProgressBar = require('progressbar.js')
-// let number_of_workers = 0;
-// function set_workers(n){
-//   number_of_workers = n;
-// }
 const bar_parameters = {
   strokeWidth: 6,
   color: '#FFEA82',
@@ -35,25 +31,22 @@ from: {color: '#5bc605'},
   }
 }
 
-let bpm_curr = [];
-let bpm_avg = [];
-let worker_data = document.getElementsByClassName("worker-data"); 
-for(let i =0; i<number_of_workers; i++){
-  let container_curr = '#bpm_curr'+String(i+1)
-  let container_avg = '#bpm_avg'+String(i+1)
-  bpm_curr.push(new ProgressBar.SemiCircle(container_curr, bar_parameters));
-  bpm_avg.push(new ProgressBar.SemiCircle(container_avg, bar_parameters));
+for(key in bpm_curr){
+    let container_curr = '#bpm_curr'+String(key)
+    let container_avg = '#bpm_avg'+String(key)
+    bpm_curr[key] = new ProgressBar.SemiCircle(container_curr, bar_parameters);
+    bpm_avg[key] = new ProgressBar.SemiCircle(container_avg, bar_parameters);
 }
-bpm_curr.forEach(bar=>{
-  bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-  bar.text.style.fontSize = '1rem';
-  bar.set(3);  // Number from 0.0 to 1.0
-})
-bpm_avg.forEach(bar=>{
-  bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-  bar.text.style.fontSize = '1rem';
-  bar.set(3);  // Number from 0.0 to 1.0
-})
+for(bar in bpm_curr){
+    bpm_curr[bar].text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+    bpm_curr[bar].text.style.fontSize = '1rem';
+    bpm_curr[bar].set(3);  // Number from 0.0 to 1.0
+}
+for(bar in bpm_avg){
+    bpm_avg[bar].text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+    bpm_avg[bar].text.style.fontSize = '1rem';
+    bpm_avg[bar].set(3);  // Number from 0.0 to 1.0
+}
 
 function setAvgBpm(val, worker){
   if(val>=160){
@@ -78,9 +71,9 @@ function setCurrBpm(val, worker){
 }
 
 function setWorkerData(h, stat, worker){
-  let status = document.getElementById('worker'+String(worker+1)).getElementsByClassName('status');
-  let height = document.getElementById('worker'+String(worker+1)).getElementsByClassName('height');
-  let worker_element = document.getElementById('worker'+String(worker+1))
+  let status = document.getElementById('worker'+String(worker)).getElementsByClassName('status');
+  let height = document.getElementById('worker'+String(worker)).getElementsByClassName('height');
+  let worker_element = document.getElementById('worker'+String(worker))
   status[0].innerHTML=stat;
   if(stat==='Offline'){
       status[0].classList.remove('green-text');
@@ -110,7 +103,12 @@ function setWorkerData(h, stat, worker){
     } catch{}
 
   }
-  height[0].innerHTML=String(h)+"m";
+  if(h!=null){
+    height[0].innerHTML=String(h)+"m";
+  }
+  else{
+    height[0].innerHTML="N/A";
+  }
 }
 
 const url = "http://192.168.0.100:8080/get?addr=all";
@@ -124,15 +122,22 @@ setInterval(()=>{
             for(var key in json){
               if(key!='status'){
                 try{
-                  setAvgBpm(json[key].pulse.avg,parseInt(key));
-                  setCurrBpm(json[key].pulse.curr,parseInt(key));
+                  try{
+                    setAvgBpm(json[key].pulse.avg,parseInt(key));
+                    setCurrBpm(json[key].pulse.curr,parseInt(key));
+                  }
+                  catch{}
                   let stat = "Online";
                   try {
                     stat = json[key].status
+
                   } catch (error) {}
-                  if(json[key].fall_detected===true||json[key].pulse.curr>130||json[key].pulse.curr<60||json[key].pulse.avg>130||json[key].pulse.avg<60){
-                    stat = "Critical"
+                  try{
+                    if(json[key].fall_detected===true||json[key].pulse.curr>130||json[key].pulse.curr<60||json[key].pulse.avg>130||json[key].pulse.avg<60){
+                      stat = "Critical"
+                    }
                   }
+                  catch{}
                   setWorkerData(json[key].height, stat, parseInt(key));
                 }
                 catch{}

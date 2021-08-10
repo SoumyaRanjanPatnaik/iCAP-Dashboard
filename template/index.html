@@ -29,20 +29,22 @@
     <div id="sec1-wrapper">
         <section id = "sec1">
             {% for worker in worker_list %}
-                <div id="worker{{forloop.counter}}" class="worker">
+                <div id="worker{{worker.worker_id}}" tabindex ="0" class="worker">
                     <div class="worker-top">
                         <h3>{{ worker.name }}</h3>
                         <span class="location">{{ worker.location_of_work }}</span>
                     </div>
                     <div class="worker-data">
                         <div class="bpm">
-                            <div id = "bpm_curr{{forloop.counter}}" class="bpm_curr"></div>
-                            <div id = "bpm_avg{{forloop.counter}}" class="bpm_avg"></div>
+                            <div id = "bpm_curr{{worker.worker_id}}" class="bpm_curr"></div>
+                            <div id = "bpm_avg{{worker.worker_id}}" class="bpm_avg"></div>
                         </div>
                         <div class="height">N/A</div>
                         <div class="status red-text">Offline </div>
                     </div>
                 </div>
+            {% empty %}
+            <p style="position:absolute; top:50%; left: calc(50% - 12.3rem)">No workers found. Please Contact your Administrator</p>
             {% endfor %}
         </section> 
     </div>
@@ -53,6 +55,17 @@
     {% block scripts %}
         <script>
             number_of_workers  = {{worker_list.count}}
+
+            let bpm_curr = {
+                {% for worker in worker_list %}
+                    {{worker.worker_id}}: null,
+                {% endfor %}
+            };
+            let bpm_avg = {
+                {% for worker in worker_list %}
+                    {{worker.worker_id}}: null,
+                {% endfor %}
+            };
         </script>
     <script src="{% static 'js/dash.js' %}" ></script>
     {% endblock %}
