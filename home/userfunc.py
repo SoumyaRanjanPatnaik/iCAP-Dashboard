@@ -36,7 +36,7 @@ def update_dashboard(addr = None):
 			response_val[str(curr_id)]["pulse"]["curr"]=latest_log.curr_bpm
 			response_val[str(curr_id)]["height"]=latest_log.height
 		except Exception:
-			response_val[str(curr_id)]={"ERROR":"No logs found"}
+			response_val[str(curr_id)]={"status":"Offline"}
 	return response_val
 
 def update_model(data=None, addr = None):
