@@ -2,7 +2,9 @@ let logs__worker=document.querySelectorAll(".logs__worker");
 logs__worker.forEach(item=>{
 	item.addEventListener("click",e=>{
 		let worker_name_block = item.querySelector(".logs__worker__name");
-		if(e.target!=worker_name_block&&e.target!=worker_name_block.querySelector(".logs__worker__name__icon")){
+		let worker_collapse_icon = worker_name_block.querySelector(".logs__worker__name__icon");
+		let worker_collapse_button = worker_name_block.querySelector(".logs__worker__name__button");
+		if(e.target!=worker_name_block && e.target!=worker_collapse_icon && e.target!=worker_collapse_button){
 			return
 		}
 		else{
