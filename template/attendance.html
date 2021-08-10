@@ -1,3 +1,17 @@
-{% extends 'index.html' %}
-{% block content %}
-{% endblock %}
+{% extends 'logs.html' %}
+{% block table_header %}
+	<td>S. No.</td>
+	<td>Date</td>
+	<td>Present</td>
+{% endblock table_header %}
+{% block table_rows %}
+{% with worker.attendance_set.all as attd %}
+{% for att in attd %}
+<tr class="logs__worker__table__row ">
+	<td>{{forloop.counter}}</td>
+	<td>{{att.date}}</td>
+	<td>{{att.Present}}</td>
+</tr>
+{% endfor %}
+{% endwith %}
+{% endblock table_rows %}
