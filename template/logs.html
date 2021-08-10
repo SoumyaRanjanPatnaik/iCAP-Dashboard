@@ -14,7 +14,7 @@
 					</span>
 					<span class="logs__worker__name__icon">+</span>
 				</div>
-			{% if logs %}
+			 {% if logs %}
 				<div class="table-container no_height">
 					<table class="logs__worker__table">
 						<tr class="logs__worker__table__row header">
@@ -46,9 +46,10 @@
 				<div class="table-container no_height">
 					<p style="text-align:center; padding: 9px;">No Logs Found</p>	
 				</div>
+		</div>
 			{% endif %}
 			{% endwith %}
-	{% endfor %}
+		{% endfor %}
 	</div>
 {% endblock %}
 
