@@ -16,12 +16,12 @@ from: {color: '#5bc605'},
   // Set default step function for all animate calls
   step: (state, bar) => {
     bar.path.setAttribute('stroke', state.color);
-    var value = Math.round(40+bar.value() * 120);
-    if (value === 400) {
+    var value = Math.round(35+bar.value() * 145);
+    if (value >= 240) {
       bar.setText('N/A');
     }
     else if(value>=160){
-      bar.setText('160+');
+      bar.setText('180+');
     } 
     else {
       bar.setText(value);
@@ -49,10 +49,10 @@ for(bar in bpm_avg){
 }
 
 function setAvgBpm(val, worker){
-  if(val>=160){
-    val=160;
+  if(val>=180){
+    val=180;
   }
-  val = (val-40)/120;
+  val = (val-35)/145;
   if(bpm_avg[worker].value()>1){
     bpm_avg[worker].set(1);
   }
@@ -60,10 +60,10 @@ function setAvgBpm(val, worker){
 }
 
 function setCurrBpm(val, worker){
-  if(val>=160){
-    val=160;
+  if(val>=180){
+    val=180;
   }
-  val = (val-40)/120;
+  val = (val-35)/145;
   if(bpm_curr[worker].value()>1){
     bpm_curr[worker].set(1);
   }
@@ -133,7 +133,7 @@ setInterval(()=>{
 
                   } catch (error) {}
                   try{
-                    if(json[key].fall_detected===true||json[key].pulse.curr>130||json[key].pulse.curr<60||json[key].pulse.avg>130||json[key].pulse.avg<60){
+                    if(json[key].fall_detected===true||json[key].pulse.curr>155||json[key].pulse.curr<45||json[key].pulse.avg>145||json[key].pulse.avg<45){
                       stat = "Critical"
                     }
                   }
