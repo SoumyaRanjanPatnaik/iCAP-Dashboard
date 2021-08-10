@@ -25,6 +25,8 @@ def update_dashboard(addr = None):
 				else:
 					latest_log.pk = None
 					latest_log.status=row.status
+					latest_log.time = timezone.localtime()
+					latest_log.datetime = timezone.now()
 					latest_log.save()
 			row.save()
 
