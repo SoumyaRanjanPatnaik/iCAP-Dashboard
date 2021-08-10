@@ -16,17 +16,16 @@ def update_dashboard(addr = None):
 		response_val[str(curr_id)]={}
 		try:
 			latest_log = Log.objects.filter(worker_id=curr_id).order_by("-datetime").first()
-			if (timezone.localdate()!=latest_log.date):
-				response_val.pop(str(curr_id))
-				continue
-			
-			if (timezone.now()-latest_log.datetime)>timedelta(minutes=5):
+			if (abs(timezone.now()-latest_log.datetime)>timedelta(minutes=5)) and row.status == "Online":
 				row.status = "Offline"
-				latest_log.pk = None
-				latest_log.status=row.status
-				latest_log.save()
-			else:
-				row.status = "Online"
+				if (timezone.localdate()!=latest_log.date):
+					response_val.pop(str(curr_id))
+					row.save()
+					continue
+				else:
+					latest_log.pk = None
+					latest_log.status=row.status
+					latest_log.save()
 			row.save()
 
 			response_val[str(curr_id)]["status"]=row.status
@@ -38,27 +37,6 @@ def update_dashboard(addr = None):
 		except Exception:
 			response_val[str(curr_id)]={"status":"Offline"}
 	return response_val
-
-def update_model(data=None, addr = None):
-	newLog = Log()
-	newWorker = Worker
-	newLog.worker_id = newWorker.objects.get(pk=addr)
-	newLog.curr_bpm = data["pulse"]["curr"]
-	newLog.avg_bpm = data["pulse"]["avg"]
-	newLog.height = data["height"]
-	newLog.fall = data["fall_detected"]
-	newLog.status = "Online"
-	newLog.save()
-
-	last_attendance = Attendance.objects.filter(worker_id =addr).order_by("-date").first()	
-	if(last_attendance.date < timezone.localdate()):
-		attendance
-	if(last_attendance.date!=timezone.localdate() or last_attendance.Present==False):
-		new_attendance = Attendance()
-		new_attendance.worker_id=Worker.objects.get(pk=addr)
-		new_attendance.Present=True
-		new_attendance.save()
-
 
 def attendance():
 	worker = Worker.objects.all()
@@ -80,4 +58,35 @@ def attendance():
 				new_attendance.date = temp_date
 				new_attendance.save()
 				temp_date+=timedelta(days=1)
-			pass
+		
+def attendance_Present(addr):
+	new_attendance = Attendance()
+	new_attendance.worker_id=Worker.objects.get(pk=addr)
+	new_attendance.Present=True
+	new_attendance.save()
+
+def update_model(data=None, addr = None):
+	newLog = Log()
+	newWorker = Worker
+	curr_worker =  newWorker.objects.get(pk=addr)
+	newLog.worker_id = curr_worker
+	newLog.curr_bpm = data["pulse"]["curr"]
+	newLog.avg_bpm = data["pulse"]["avg"]
+	newLog.height = data["height"]
+	newLog.fall = data["fall_detected"]
+	newLog.status = "Online"
+	newLog.save()
+	curr_worker.status = "Online"
+	curr_worker.save()
+
+	last_attendance = Attendance.objects.filter(worker_id =addr).order_by("-date").first()	
+	if(last_attendance == None):
+		attendance_Present(addr)
+		return
+	if(last_attendance.date < timezone.localdate()):
+		attendance()
+	if(last_attendance.date!=timezone.localdate() or last_attendance.Present==False):
+		new_attendance = Attendance()
+		new_attendance.worker_id=Worker.objects.get(pk=addr)
+		new_attendance.Present=True
+		new_attendance.save()
