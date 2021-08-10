@@ -103,7 +103,12 @@ function setWorkerData(h, stat, worker){
     } catch{}
 
   }
-  height[0].innerHTML=String(h)+"m";
+  if(h!=null){
+    height[0].innerHTML=String(h)+"m";
+  }
+  else{
+    height[0].innerHTML="N/A";
+  }
 }
 
 const url = "http://192.168.0.100:8080/get?addr=all";
@@ -117,15 +122,22 @@ setInterval(()=>{
             for(var key in json){
               if(key!='status'){
                 try{
-                  setAvgBpm(json[key].pulse.avg,parseInt(key));
-                  setCurrBpm(json[key].pulse.curr,parseInt(key));
+                  try{
+                    setAvgBpm(json[key].pulse.avg,parseInt(key));
+                    setCurrBpm(json[key].pulse.curr,parseInt(key));
+                  }
+                  catch{}
                   let stat = "Online";
                   try {
                     stat = json[key].status
+
                   } catch (error) {}
-                  if(json[key].fall_detected===true||json[key].pulse.curr>130||json[key].pulse.curr<60||json[key].pulse.avg>130||json[key].pulse.avg<60){
-                    stat = "Critical"
+                  try{
+                    if(json[key].fall_detected===true||json[key].pulse.curr>130||json[key].pulse.curr<60||json[key].pulse.avg>130||json[key].pulse.avg<60){
+                      stat = "Critical"
+                    }
                   }
+                  catch{}
                   setWorkerData(json[key].height, stat, parseInt(key));
                 }
                 catch{}
