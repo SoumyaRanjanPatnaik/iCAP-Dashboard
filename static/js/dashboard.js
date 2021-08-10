@@ -1,12 +1,15 @@
 let ProgressBar = require('progressbar.js')
-const number_of_workers = 9;
+// let number_of_workers = 0;
+// function set_workers(n){
+//   number_of_workers = n;
+// }
 const bar_parameters = {
   strokeWidth: 6,
   color: '#FFEA82',
   trailColor: '#eee',
   trailWidth: 1,
   easing: 'easeInOut',
-  duration: 1400,
+  duration:950,
   svgStyle: null,
   text: {
     value: '',
@@ -77,30 +80,34 @@ function setCurrBpm(val, worker){
 function setWorkerData(h, stat, worker){
   let status = document.getElementById('worker'+String(worker+1)).getElementsByClassName('status');
   let height = document.getElementById('worker'+String(worker+1)).getElementsByClassName('height');
+  let worker_element = document.getElementById('worker'+String(worker+1))
   status[0].innerHTML=stat;
-  if(stat=='Online'){
+  if(stat==='Offline'){
+      status[0].classList.remove('green-text');
+      status[0].classList.add('red-text');
+      worker_element.classList.add('dull')      
+  }
+  else if(stat=='Online'){
     try{
       status[0].classList.remove('red-text');
       status[0].classList.add('green-text');
+      worker_element.classList.remove('dull')      
     }
     catch{}
   }
-  else if(stat=="Offline"){
+  else if(stat=="Critical"){
     try{
       status[0].classList.remove('green-text');
       status[0].classList.add('red-text');
+      worker_element.classList.remove('dull')      
+
     } catch{}
+
   }
   else if (stat=="Warning"){
     try{
 
     } catch{}
-
-  }
-  else if (stat=="Critical"){
-    try {
-      
-    } catch (error) {}
 
   }
   height[0].innerHTML=String(h)+"m";
@@ -116,17 +123,19 @@ setInterval(()=>{
           .then(json=>{
             for(var key in json){
               if(key!='status'){
-                setAvgBpm(json[key].pulse.avg,parseInt(key));
-                setCurrBpm(json[key].pulse.curr,parseInt(key));
-                let stat = "Online";
-                try {
-                  stat = json[key].status
-                } catch (error) {}
-                if(json[key].fall_detected===true||json[key].pulse.curr>130||json[key].pulse.curr<60||json[key].pulse.avg>130||json[key].pulse.avg<60){
-                  stat = "Critical"
+                try{
+                  setAvgBpm(json[key].pulse.avg,parseInt(key));
+                  setCurrBpm(json[key].pulse.curr,parseInt(key));
+                  let stat = "Online";
+                  try {
+                    stat = json[key].status
+                  } catch (error) {}
+                  if(json[key].fall_detected===true||json[key].pulse.curr>130||json[key].pulse.curr<60||json[key].pulse.avg>130||json[key].pulse.avg<60){
+                    stat = "Critical"
+                  }
+                  setWorkerData(json[key].height, stat, parseInt(key));
                 }
-                setWorkerData(json[key].height, stat, parseInt(key));
-                
+                catch{}
               }
             }
           });
@@ -135,4 +144,4 @@ setInterval(()=>{
         alert("HTTP-Error: " + res.status);
       }
     })
-}, 750);
+}, 1000);

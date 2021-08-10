@@ -16,7 +16,3 @@ function toggle_menu(){
 }
 
 hamburger.addEventListener("click", toggle_menu);
-
-function get_data(){
-
-}
