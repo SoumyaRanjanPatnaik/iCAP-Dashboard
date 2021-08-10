@@ -6,16 +6,19 @@ This code present in this repository acts as the **frontend** and **webserver** 
 ***IoT Based Health and Safety for Construction workers*** is comprised of two parts: **Sensor Nodes** and **WebServer**.
 
 ## Sensor Nodes
-The workers will be required to wear sensor nodes that exist in the form of helmets, which will be used to monitor the vitals of the workers (Temparature and Pulse) and to detetect falls. Since the **accelerometer** is responsible for detecting falls, the chances of false positives is high. This is because the acceleration a fall is \(g=9.8m/s^2\) regardless of the height of the platform the worker was standing on. We hence use a barometer to calculate the height of the platform above round level, after which we calculate the expected duration of fall using kinematics.
 
-Let the height of the platform be \(H\), acceleration due to gravity be ![formula](https://render.githubusercontent.com/render/math?math=g=9.8m/s^2) and the expected duration of fall be \(t\). We can assume the initial velocity to be \(u=0\). 
+**NOTE**: If this sectiion contains a workaround for latex might not  be readable in dark mode. You can either switch to light mode or view a pre-rendered image [here](./assets/img/LaTeX.png).
+
+The workers will be required to wear sensor nodes that exist in the form of helmets, which will be used to monitor the vitals of the workers (Temparature and Pulse) and to detetect falls. Since the **accelerometer** is responsible for detecting falls, the chances of false positives is high. This is because the acceleration a fall is ![formula](https://render.githubusercontent.com/render/math?math=g=9.8m/s^2) regardless of the height of the platform the worker was standing on. We hence use a barometer to calculate the height of the platform above round level, after which we calculate the expected duration of fall using kinematics.
+
+Let the height of the platform be [formula](https://render.githubusercontent.com/render/math?math=H), acceleration due to gravity be ![formula](https://render.githubusercontent.com/render/math?math=g=9.8m/s^2) and the expected duration of fall be ![formula](https://render.githubusercontent.com/render/math?math=T). We can assume the initial velocity to be ![formula](https://render.githubusercontent.com/render/math?math=u=0). 
 
 For equations of motion, we get
 
 
 ![formula](https://render.githubusercontent.com/render/math?math=H=ut%2B\frac{1}{2}gt^2)
 
-Since \(u=0\), we can rewrite the above expression as
+Since ![formula](https://render.githubusercontent.com/render/math?math=u=0), we can rewrite the above expression as
 
 
 ![formula](https://render.githubusercontent.com/render/math?math=H=\frac{1}{2}gt^2)
