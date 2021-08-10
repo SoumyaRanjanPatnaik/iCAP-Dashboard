@@ -11,7 +11,12 @@ logs__worker.forEach(item=>{
 				let icon = item_.querySelector('.logs__worker__name__icon')
 				if(item_===item){
 					logs.classList.toggle("no_height");
-					item.classList.toggle("shadow")
+					if(logs.classList.contains("no_height")){
+						item.classList.remove("shadow")
+					}
+					else{
+						item.classList.add("shadow")
+					}
 					setTimeout(()=>{
 						logs.classList.toggle("scrollbar")
 					},610);
