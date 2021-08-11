@@ -66,5 +66,11 @@ There are 3 django models (or sql table) in the database.
 
 	
 # Gallery
+![Dashboard](./assets/img/Dashboard.png)
+![Logs](./assets/img/Logs.png)
+![Attendance](./assets/img/Attendance.png)
+
+# Video Demo
+<video src="./assets/vid/Demo.mkv" type="video/mkv"></video>
 # Building
 
