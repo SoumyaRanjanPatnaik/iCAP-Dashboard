@@ -77,6 +77,8 @@ There are 3 django models (or sql table) in the database.
 ![Attendance](./assets/img/Attendance.png)
 
 # Video Demo
-<video src="./assets/vid/demo.mp4" type="video/mp4" controls ></video>
+
+https://user-images.githubusercontent.com/75623505/129031345-91c051a8-6423-404e-aebd-79fafc734a77.mp4
+
 # Building
 
