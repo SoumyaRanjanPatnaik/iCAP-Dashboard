@@ -42,7 +42,14 @@ The webserver is explained in more detail in the upcoming sections of this READM
 # Features
 ## Backend
 1. **Recieve Data From Sensor Nodes**: The sensor nodes can send relavant data to the webserver using the route **/send**. 
-1. **SQLite Database**:  All data is stored within a SQLite Database.
+1. **SQLite Database**:  All data recievend from the sensor nodes is stored within a SQLite Database.
+1. **Automatic Attendance**: This automaically marks the attendance of the worker if he or she is wearing the helmet.
+1. **Instantaneously update the frontend**: The front-end gets dynamically updated instantaneously, as soon as the data is recieved from the sensor nodes.
+## Frontend
+1. **Interactive and informative dashboard**: A beautiful dashboard that dynamically updates by fetching data from the django server using get request.
+1. **Logs**: The logs can be viewed in this page for each worker.
+1. **Attendance**: This section can be used to mark the attendance of the wrokers based on weather their helmet was on during any paticular day. 
+
 # Details of DataBase:  
 There are 3 django models (or sql table) in the database.
 * **Worker**: This model stores the details of the workers. It has the following fields:
@@ -63,7 +70,6 @@ There are 3 django models (or sql table) in the database.
 	* **worker_id**: This is the foriegn key to the model *Worker*. 
 	* **date**: This field stores the date of attendance.
 	* **Present**: This field stores weather the worker was present on any given day.
-
 	
 # Gallery
 ![Dashboard](./assets/img/Dashboard.png)
