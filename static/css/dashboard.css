@@ -146,11 +146,14 @@
     content: "OFFLINE";
     color: white;
     z-index: 110;
-    position: absolute;
-    top: 60%;
     font-weight: bold;
     font-size: 1.5em;
-    left: 36.2%;
+    margin: auto;
+    position: absolute;
+    inset: 0;
+    top:25%;
+    display: grid;
+    place-content: center;
 }
 :root{
     --worker-data-margin-left: 115px;
