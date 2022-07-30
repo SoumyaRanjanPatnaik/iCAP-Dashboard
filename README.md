@@ -2,7 +2,7 @@
 
 This code present in this repository acts as the **frontend** and **webserver** for the project **IoT BasedHealth and Safety For Construction Workers**. 
 
-**NOTE 1**: Find the code for the sensor node [here](https://github.com/SoumyaRanjanPatnaik/iCAP-Node.git).
+**NOTE 1**: Find the code for the sensor node [here](https://github.com/SoumyaRanjanPatnaik/iCAP-Node.git) 
 **NOTE 2**: For more information, please refer to the Research paper - https://doi.org/10.1109/I2CT54291.2022.9825406
 # Overview
 ***IoT Based Health and Safety for Construction workers*** is comprised of two parts: **Sensor Nodes** and **WebServer**.
